@@ -31,7 +31,6 @@ class databaseConnection
             exit();
         }else {
             $this->pdo = self::__construct();
-            echo $username . '     ' . $password . '      ';
             $sql = "SELECT * FROM users WHERE username=:username AND password=:password";
             $statment = $this->pdo->prepare($sql);
             $statment->bindParam(':username',$username);
@@ -43,6 +42,22 @@ class databaseConnection
                 return true;
             }
             else{
+                return false;
+            }
+        }
+    }
+    public function Insert($username,$password,$email){
+        if (!isset($username) || !isset($password) || !isset($email)) {
+            echo "Nice try, but please insert all the data!";
+            exit();
+        }else if(!$this->Select($username,$password)){
+            $this->pdo = self::__construct();
+            echo $username.$password,$email;
+            $sql = "INSERT INTO users (username,password,email) VALUES (?,?,?)";
+            $result = $this->pdo->prepare($sql)->execute(array($username,(md5($password)),$email));
+            if ($result){
+                return true;
+            }else{
                 return false;
             }
         }

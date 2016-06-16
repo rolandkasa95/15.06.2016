@@ -16,7 +16,6 @@ if (!isset($_GET['user']) || !isset($_GET['password'])){
     echo "i just say";
     exit();
 }else{
-    echo "something";
     $databaseConnection = new databaseConnection();
     $password = $_GET['password'];
     $user = $_GET['user'];
