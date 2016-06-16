@@ -31,12 +31,14 @@ class databaseConnection
             exit();
         }else {
             $this->pdo = self::__construct();
-            $sql = "SELECT * FROM users WHEN password=:password && username=:username";
-            $result = $this->pdo->prepare($sql)->execute(array(md5($password),$username));
-            foreach($result as $row){
-                echo $row['username'];
-                echo $row['password'];
-            }
+            echo $username . '     ' . $password . '      ';
+            $sql = "SELECT * FROM users WHERE username=:username AND password=:password";
+            $statment = $this->pdo->prepare($sql);
+            $statment->bindParam(':username',$username);
+            $statment->bindParam(':password',md5($password));
+            $statment->execute();
+            $result = $statment->fetch(PDO::FETCH_ASSOC);
+            var_dump($result);
             if ($result){
                 return true;
             }
