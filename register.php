@@ -12,8 +12,8 @@ if(!isset($user) || !isset($password) || !isset($email)){
     $databaseConnection = new databaseConnection();
     $boolean = $databaseConnection->Insert($user,$password,$email);
     if ($boolean){
-        echo "Register was successful";
+        header("Location: printDatabase.html");
     }else{
-        echo "register was unsuccessful";
+        header("Location: register.html");
     }
 }

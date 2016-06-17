@@ -52,7 +52,6 @@ class databaseConnection
             exit();
         }else if(!$this->Select($username,$password)){
             $this->pdo = self::__construct();
-            echo $username.$password,$email;
             $sql = "INSERT INTO users (username,password,email) VALUES (?,?,?)";
             $result = $this->pdo->prepare($sql)->execute(array($username,(md5($password)),$email));
             if ($result){
@@ -61,5 +60,73 @@ class databaseConnection
                 return false;
             }
         }
+    }
+
+    public function printDatabase($select,$from,$where = NULL)
+    {
+        if(isset($select))
+        {
+            $sql = "SELECT " . $select;
+            if(isset($from)) {
+                $sql .= " FROM " . $from;
+                if(isset($where)){
+                    $sql.= " WHERE " . $where;
+                }
+            }
+        }
+        $this->pdo = self::__construct();
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function deleteQury($table, $password, $username){
+        if(isset($table)){
+            $sql = "DELETE FROM " . $table;
+            if(isset($username) && isset($password)){
+                $sql .= " WHERE username='" . $username . "' AND password='" . md5($password) . "'" ;
+            }
+        }else{
+            exit();
+        }
+        echo $sql;
+        $this->pdo = self::__construct();
+        $statement = $this->pdo->prepare($sql);
+        $boolean = $statement->execute();
+        var_dump($boolean);
+        return $boolean;
+    }
+
+    public function updateQuery($table,$mass,$type,$color){
+        if(isset($table)){
+            $sql = "UPDATE " . $table;
+            if(isset($mass)){
+                $sql .= " SET mass=mass-" . $mass;
+                if(isset($type) && isset($color)){
+                    $sql .= " WHERE type='" . $type . "' AND color= '" . $color . "'";
+                }else exit();
+            }else exit();
+        }else exit();
+        $this->pdo= self::__construct();
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute();
+        $result = self::printDatabase("price","products","type='" . $type . "' AND color='" . $color . "'");
+        echo $result;
+        foreach ($result as $row){
+            $price = $row["price"];
+        }
+        session_start();
+        $statement = $this->pdo->prepare("UPDATE users SET paymant=paymant+" . $mass*$price . " WHERE username='" .$_SESSION['username'] . "'");
+        $statement->execute();
+    }
+
+    public function paymant(){
+        session_start();
+        $result = self::printDatabase("paymant","users","username='" . $_SESSION['username'] . "'");
+        foreach ($result as $row){
+            $paymant = $row["paymant"];
+        }
+        return $paymant;
     }
 }

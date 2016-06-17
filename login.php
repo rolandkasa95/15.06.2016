@@ -21,8 +21,11 @@ if (!isset($_GET['user']) || !isset($_GET['password'])){
     $user = $_GET['user'];
     $boolean = $databaseConnection->Select($user,$password);
     if ($boolean){
-        echo "Login was successful";
+        session_start();
+        $_SESSION['username'] = $user;
+        $_SESSION['password'] = $password;
+        header("Location: costumerBuying.php");
     }else{
-        echo "Login was unsuccessful";
+        header("Location: register.html");
     }
 }
