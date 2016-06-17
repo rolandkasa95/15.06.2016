@@ -14,9 +14,8 @@ $databaseConnection = new databaseConnection();
 $boolean = $databaseConnection->deleteQury("users",$password,$user);
 
 if($boolean){
-    //header("Location: printDatabase.php");
+    header("Location: register.html");
     echo "succesful";
 }else{
-    echo "unsuccesful";
-    //header("Location: register.html");
+    header("Location: register.html");
 }

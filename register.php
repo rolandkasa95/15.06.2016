@@ -12,7 +12,9 @@ if(!isset($user) || !isset($password) || !isset($email)){
     $databaseConnection = new databaseConnection();
     $boolean = $databaseConnection->Insert($user,$password,$email);
     if ($boolean){
-        header("Location: printDatabase.html");
+        session_start();
+        $_SESSION['username'] = $user;
+        header("Location: costumerBuying.php");
     }else{
         header("Location: register.html");
     }

@@ -58,18 +58,20 @@
     <div class="container">
         <div class="row">
                 <div class="col-md-4">
-                    <h2>Hi again,
-                    <?php
-                    session_start();
-                    echo $_SESSION['username'];
-                    ?> when we meet each other at the shop, you will have to pay
-                    <?php
-                    require_once 'databaseConnection.php';
-                    $obj = new databaseConnection();
-                    $price = $obj->paymant();
-                    echo "\$" . $price;
-                    ?> Thank's :)
-                </h2>
+                    <h3>
+                        <?php
+                        require_once 'databaseConnection.php';
+                        session_start();
+                        $obj = new databaseConnection();
+                        $price = $obj->paymant();
+                        if($price){
+                            echo "Hi again " . $_SESSION['username'] .", <br />" . "you have to pay \$" . $price . " at the shop.";
+                        }else{
+                            echo "Hi again " . $_SESSION['username'] .", <br />" . "for now you don't have to pay anithing.";
+                        }
+                        ?>
+
+                    </h3>
                     <a href="register.html"><input type="submit" class="btn btn-lg btn-primary active" name="Logout" value="Logout"></a>
             </div>
         </div>

@@ -42,7 +42,16 @@ class databaseConnection
                 return true;
             }
             else{
-                return false;
+                $sql = "SELECT * FROM users WHERE username=:username";
+                $statment = $this->pdo->prepare($sql);
+                $statment->bindParam(':username',$username);
+                $statment->execute();
+                $result1 = $statment->fetch(PDO::FETCH_ASSOC);
+                if ($result1){
+                    return true;
+                }else{
+                    return false;
+                }
             }
         }
     }
