@@ -93,20 +93,25 @@ class databaseConnection
                 return true;
             }
             else{
-                $sql = "SELECT * FROM users WHERE username=:username";
-                $statment = $this->pdo->prepare($sql);
-                $statment->bindParam(':username',$username);
-                $statment->execute();
-                $result1 = $statment->fetch(PDO::FETCH_ASSOC);
-                if ($result1){
-                    return true;
-                }else{
-                    return false;
-                }
+                return false;
             }
         }
     }
 
+    public function Select_registration($username){
+        $this->pdo = self::__construct();
+        $sql = "SELECT * FROM users WHERE username=:username";
+        $statment = $this->pdo->prepare($sql);
+        $statment->bindParam(':username',$username);
+        $statment->execute();
+        $result1 = $statment->fetch(PDO::FETCH_ASSOC);
+        var_dump($result1);
+        if ($result1){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * Registration
      *
@@ -124,9 +129,10 @@ class databaseConnection
         if (!isset($username) || !isset($password) || !isset($email)) {
             echo "Nice try, but please insert all the data!";
             exit();
-        }else if(!$this->Select($username,$password)){
+        }else if(!$this->Select_registration($username)){
             $this->pdo = self::__construct();
             $sql = "INSERT INTO users (username,password,email) VALUES (?,?,?)";
+            echo $sql;
             $result = $this->pdo->prepare($sql)->execute(array($username,(md5($password)),$email));
             if ($result){
                 return true;

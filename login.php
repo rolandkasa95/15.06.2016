@@ -25,6 +25,11 @@ if (!isset($_GET['user']) || !isset($_GET['password'])){
         session_start();
         $_SESSION['username'] = $user;
         $_SESSION['password'] = $password;
+        $result = $databaseConnection->printDatabase("email","users","username='" . $user . "'");
+        foreach($result as $row){
+            $email = $row['email'];
+        }
+        $_SESSION['email'] = $email;
         header("Location: costumerBuying.php");
     }else{
         header("Location: register.html");

@@ -83,7 +83,7 @@
                     foreach ($result as $row){
                         $admin = $row['admin'];
                     }
-                    if ($result){
+                    if ($admin){
                         require_once 'printDatabase.php';
                         $obj = new printDatabase(false);
                         echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"table.css\">";
@@ -102,12 +102,12 @@
                         echo  "<label for=\"username\">Checkout user: </label>";
                         echo  "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" required>";
                         echo  "</div>";
+                        echo  "<br />";
+                        echo  "<a href=\"costumerBuying.php\"><input type=\"submit\" class=\"btn btn-lg btn-success active\" name=\"checkout\" value=\"Checkout\"></a>";
+                        echo  "</form>";
                     }
                     ?>
                   </h3>
-                        <br />
-                      <a href="costumerBuying.php"><input type="submit" class="btn btn-lg btn-success active" name="checkout" value="Checkout"></a>
-                      </form>
             </div>
         </div>
     </div>
