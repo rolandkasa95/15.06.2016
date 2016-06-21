@@ -41,14 +41,14 @@
             <div class="col-sm-6">
                 <?php
                 require_once 'printDatabase.php';
-                $obj = new printDatabase();
+                $obj = new printDatabase(true);
                 echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"table.css\">";
                 echo "<table>";
                 echo "<thead>";
                 echo "<tr><td>Mass</td><td>Type</td><td>Color</td><td>Price</td>";
                 echo "</thead>";
                 echo "<tbody>";
-                $obj->tableForm();
+                $obj->tableForm(true);
                 echo "</tbody>";
                 echo "</table>";
                 ?>
@@ -57,22 +57,57 @@
     </div>
     <div class="container">
         <div class="row">
-                <div class="col-md-4">
-                    <h3>
-                        <?php
-                        require_once 'databaseConnection.php';
-                        session_start();
-                        $obj = new databaseConnection();
-                        $price = $obj->paymant();
-                        if($price){
-                            echo "Hi again " . $_SESSION['username'] .", <br />" . "you have to pay \$" . $price . " at the shop.";
-                        }else{
-                            echo "Hi again " . $_SESSION['username'] .", <br />" . "for now you don't have to pay anithing.";
-                        }
-                        ?>
+            <div class="col-md-4">
+                <h3>
+                    <?php
+                    require_once 'databaseConnection.php';
+                    session_start();
+                    $obj = new databaseConnection();
+                    $price = $obj->paymant();
+                    if($price){
+                        echo "Hi again " . $_SESSION['username'] .", <br />" . "you have to pay \$" . $price . " at the shop.";
+                    }else{
+                        echo "Hi again " . $_SESSION['username'] .", <br />" . "for now you don't have to pay anithing.";
+                    }
+                    ?>
+                </h3>
+                <a href="register.html"><input type="submit" class="btn btn-lg btn-primary active" name="Logout" value="Logout"></a>
+            </div>
+            <div class="col-md-4">
+                  <h3>
+                    <?php
 
-                    </h3>
-                    <a href="register.html"><input type="submit" class="btn btn-lg btn-primary active" name="Logout" value="Logout"></a>
+                    require_once "databaseConnection.php";
+                    $databaseConnection = new databaseConnection();
+                    $result = $databaseConnection->printDatabase("admin","users","username='" . $_SESSION['username'] . "'");
+                    foreach ($result as $row){
+                        $admin = $row['admin'];
+                    }
+                    if ($result){
+                        require_once 'printDatabase.php';
+                        $obj = new printDatabase(false);
+                        echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"table.css\">";
+                        echo "<table>";
+                        echo "<thead>";
+                        echo "<tr><td>Username</td><td>Payment</td></tr>";
+                        echo "</thead>";
+                        echo "<tbody>";
+                        $obj->tableForm(false);
+                        echo "</tbody>";
+                        echo "</table>";
+                        echo "</div>";
+                        echo "<div class=\"col-md-4\">";
+                        echo  "<form role=\"form\" action=\"payment_checkout.php\" method=\"GET\">";
+                        echo  "<div class=\"form-group\" style=\"display: inline-block\">";
+                        echo  "<label for=\"username\">Checkout user: </label>";
+                        echo  "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" required>";
+                        echo  "</div>";
+                    }
+                    ?>
+                  </h3>
+                        <br />
+                      <a href="costumerBuying.php"><input type="submit" class="btn btn-lg btn-success active" name="checkout" value="Checkout"></a>
+                      </form>
             </div>
         </div>
     </div>

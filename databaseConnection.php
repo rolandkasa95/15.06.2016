@@ -248,4 +248,13 @@ class databaseConnection
         }
         return $paymant;
     }
+
+    public function Checkout($username){
+        $this->pdo= self::__construct();
+        $sql = "UPDATE users SET paymant=0 WHERE username=:username";
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindParam(":username",$username);
+        $statement->execute();
+        return true;
+    }
 }

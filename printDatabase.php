@@ -15,23 +15,39 @@ class printDatabase
 
     public $result;
 
-    public function __construct()
+    public function __construct($bool)
     {
         $databaseConnection = new databaseConnection();
-        $this->result = $databaseConnection->printDatabase("*","products",NULL);
+        if ($bool){
+            $this->result = $databaseConnection->printDatabase("*","products",NULL);
+        }else{
+            $this->result = $databaseConnection->printDatabase("username,paymant","users",NULL);
+        }
+
     }
 
-    public function tableForm()
-    {
 
-        foreach($this->result as $row)
+    public function tableForm($bool)
+    {
+        if($bool)
         {
-            echo "<tr>";
-            echo "<td>" . $row["mass"] . "</td>";
-            echo "<td>" . $row["type"] . "</td>";
-            echo "<td>" . $row["color"] . "</td>";
-            echo "<td>\$" . $row["price"] . "</td>";
-            echo "</tr>";
+            foreach($this->result as $row)
+            {
+                echo "<tr>";
+                echo "<td>" . $row["mass"] . "</td>";
+                echo "<td>" . $row["type"] . "</td>";
+                echo "<td>" . $row["color"] . "</td>";
+                echo "<td>\$" . $row["price"] . "</td>";
+                echo "</tr>";
+            }
+        }else{
+            foreach($this->result as $row)
+            {
+                echo "<tr>";
+                echo "<td>" . $row["username"] . "</td>";
+                echo "<td>\$" . $row["paymant"] . "</td>";
+                echo "</tr>";
+            }
         }
         
     }
