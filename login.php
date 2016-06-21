@@ -1,10 +1,11 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: roland
- * Date: 16.06.2016
- * Time: 14:04
+ * Login
+ *
+ * This code will be executed when the login form is
+ * submitted, it will call the Select function after
+ * connecting to the database
  */
 
 require_once 'databaseConnection.php';

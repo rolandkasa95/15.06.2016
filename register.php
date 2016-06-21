@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Register
+ *
+ * This function will execute whenever the registration
+ * form is completed, and will inserts a new user to the
+ * database
+ *
+ */
+
 require_once 'databaseConnection.php';
 
 $user = $_GET['user'];

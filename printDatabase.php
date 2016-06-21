@@ -1,7 +1,15 @@
 <?php
 
 require_once 'databaseConnection.php';
-    
+
+/**
+ * Class printDatabase
+ *
+ * This class prints the products to a table
+ * form, it is called within the costumerBuying.php
+ * file
+ */
+
 class printDatabase
 {
 
